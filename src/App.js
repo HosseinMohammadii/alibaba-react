@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Hotel from './components/Hotel';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Profile from './components/Profile';
+import Test from './components/Test';
 import SignUpAndSignIn from './components/SignUpAndSignIn';
 import { Switch, Route, Redirect } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
@@ -17,6 +19,8 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => (<Redirect to="/home" />)} />
         <Route exact path="/home" component={Home} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/test" component={Test} />
         <Route exact path="/hotel/:id" component={Hotel} />
         <Route exact path="/login" component={SignUpAndSignIn} />
         <Route exact path="/error/403" render={() => (<ErrorPage status={403} message={'شما به این محتوا دسترسی ندارید :)'} />)} />
