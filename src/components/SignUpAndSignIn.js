@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import axios from 'axios';
+import { BaseUrl } from "../baseUrl";
+
+
 
 class SignUpAndSignIn extends Component {
+
 
     state={
         status: false
@@ -9,6 +14,39 @@ class SignUpAndSignIn extends Component {
     handlerToggle = (status) => {
         this.setState({status: status})
     }
+
+    onChange(e) {
+     this.setState({[e.target.name]: e.target.value})
+    }
+
+    handleSubmit(e) {
+    e.preventDefault();
+
+    const data = {
+        email: this.state.login_email,
+        password: this.state.login_password,
+    };
+    console.log(data);
+
+    axios.post(BaseUrl + 'authentication/jwt/token/', { data })
+      .then(res => {
+        console.log(data);
+      })
+  }
+
+  onSubmitForm = e => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const body = {}
+    formData.forEach((value, property) => body[property] = value)
+    //here you can update, remove, add values/properties in the body object this is specially usefull if any custom process must be done to check, encrypt data or wherever you want.
+    console.table(body)
+    // Request goes here.
+      axios.post(BaseUrl + 'authentication/jwt/token/', body)
+      .then(res => {
+        console.log(res.data);
+      })
+  }
 
     render() {
         return (
@@ -70,7 +108,7 @@ class SignUpAndSignIn extends Component {
                                 </h5>
                             </div>
 
-                            <div className="login_signup_link" href="signup.html" onClick={() => this.handlerToggle("signup")}>
+                            <div className="login_signup_link " href="signup.html" onClick={() => this.handlerToggle("signup")}>
                                 <i className="fas fa-user-plus" style={{ fontSize: "25px", width: "32px", height: "32px" }} ></i>
                                 <h5 style={{marginTop: "15px"}}>
                                     ثبت نام
@@ -78,39 +116,39 @@ class SignUpAndSignIn extends Component {
                             </div>
                         </div>
                         {this.state.status === "signup" ?  (
-                            <form className="signup_form" action="alibaba.ir" method="post">
+                            <form onSubmit={e => this.onSubmitForm(e)} className="signup_form">
                             <div className="signup_form_group">
                                 <label className="signup_form_label" for="signup_email">
                                     ایمیل(الزامی)
                             </label>
-                                <input type="email" name="email" id="signup_email" tabindex="10" dir="ltr" className="signup_form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="email" name="email" id="signup_email" tabindex="10" dir="ltr" className="signup_form_text_input" />
                             </div>
 
                             <div className="signup_form_group">
                                 <label className="signup_form_label" for="signup_phone">
                                     تلفن همراه(الزامی)
                             </label>
-                                <input type="tel" name="phone" id="signup_phone" tabindex="10" dir="ltr" className="signup_form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="tel" name="phone" id="signup_phone" tabindex="10" dir="ltr" className="signup_form_text_input" />
                             </div>
 
                             <div className="signup_form_group">
                                 <label className="signup_form_label" for="signup_password">
                                     رمزعبور(الزامی)
                             </label>
-                                <input type="password" name="password" id="signup_password" tabindex="10" dir="ltr" className="signup_form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="password" name="password" id="signup_password" tabindex="10" dir="ltr" className="signup_form_text_input" />
                             </div>
 
                             <div className="signup_form_group">
                                 <label className="signup_form_label" for="signup_password_repeat">
                                     تکرار رمزعبور(الزامی)
                             </label>
-                                <input type="password" name="password_repeat" id="signup_password_repeat" tabindex="10" dir="ltr" className="signup_form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="password" name="password_repeat" id="signup_password_repeat" tabindex="10" dir="ltr" className="signup_form_text_input" />
                             </div>
 
                             <div className="signup_form_group">
                                 <div>
                                     <label className="signup_form_checkbox_label" for="signup_rules" style={{ display: "inline-block" }}>
-                                        <input type="checkbox" name="rules" id="signup_rules" className="signup_form_check_input" />
+                                        <input onChange={e => this.onChange(e)} type="checkbox" name="rules" id="signup_rules" className="signup_form_check_input" />
                                         <span className="signup_form_checkbox_button_control"></span>
                                         <span>
                                             <a href="/policy" className="rules">قوانین و مقررات سفرهای علی‌بابا</a>
@@ -121,7 +159,7 @@ class SignUpAndSignIn extends Component {
 
                                 <div>
                                     <label className="signup_form_checkbox_label" for="signup_feed" style={{ display: "inline-block" }}>
-                                        <input type="checkbox" name="feed" id="signup_feed" className="signup_form_check_input" />
+                                        <input onChange={e => this.onChange(e)} type="checkbox" name="feed" id="signup_feed" className="signup_form_check_input" />
                                         <span className="signup_form_checkbox_button_control"></span>
                                         <span>
                                             مایل به دریافت خبرنامه و ایمیل‌های علی‌بابا هستم
@@ -137,19 +175,19 @@ class SignUpAndSignIn extends Component {
                         </button>
                         </form>
                         ) : (
-                            <form className="login_form" action="alibaba.ir" method="post">
+                            <form className="login_form" onSubmit={e => this.onSubmitForm(e)}>
                             <div className="form_group">
                                 <label className="form_label" for="login_email">
                                     ایمیل یا شماره همراه خود را وارد کنید
                                 </label>
-                                <input type="email" name="email" id="login_email" tabindex="10" dir="ltr" className="form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="email" name="email" id="login_email" tabindex="10" dir="ltr" className="form_text_input" />
                             </div>
             
                             <div className="form_group">
                                 <label className="form_label" for="login_password">
                                     رمز عبور خود را وارد کنید
                                 </label>
-                                <input type="password" name="password" id="login_password" tabindex="10" dir="ltr" className="form_text_input" />
+                                <input onChange={e => this.onChange(e)} type="password" name="password" id="login_password" tabindex="10" dir="ltr" className="form_text_input" />
                             </div>
                             <button className="login_button login_blue_button" type="submit">
                                 وارد شوید

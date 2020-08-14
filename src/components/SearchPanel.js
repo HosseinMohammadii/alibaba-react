@@ -103,7 +103,7 @@ const SearchPanel = () => {
                             </div>
 
                             <div className="width_15per">
-                                <div className="search_form_hotel_field_container width_100per">
+                                <div className="search_form_hotel_field_container width_100per" style={{ backgroundColor: 'rgba(0,0,0,0)'}}>
                                     <button type="submit" className="search_form_hotel_field search_form_hotel_button">
                                         جستجو
                                 </button>

@@ -88,7 +88,7 @@ class Hotels extends Component {
                         {this.state.hotels.map((hotel, index) => {
                             let stars = []
                             for (let i = 0; i < parseInt(hotel.stars); i++) {
-                                stars.push(<i className="fas fa-star hotel_item_star positive_star"></i>)
+                                stars.push(<i className="fas fa-star hotel_item_star positive_star"/>)
                             }
 
                             const noneStar = 5 - stars.length
@@ -97,7 +97,7 @@ class Hotels extends Component {
                                 stars.push(<i className="fas fa-star hotel_item_star"></i>)
                             }
 
-                            if (hotel.rate_number < 0) {
+                            if (hotel.stars < 0) {
                                 return null
                             } 
                             return (
@@ -105,7 +105,9 @@ class Hotels extends Component {
                                 <li className="hotel_item_container">
                                     <div className="hotel_item">
                                         <a href={"/hotel/" + parseInt(hotel._id)}>
-                                            <div className="hotel_item_image" style={imageStyle}>
+                                            {/* eslint-disable-next-line no-useless-concat */}
+                                            <div className="hotel_item_image" style={{backgroundImage: "url(" + hotel.images[0] + ")", }}>
+
                                             </div>
                                             <div className="hotel_item_info">
                                                 <div className="hotel_item_title_container">
